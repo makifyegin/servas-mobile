@@ -9,5 +9,10 @@ module Api
     country = Country.find(params[:id])
     render json: country
   end
+
+  def create
+    country = Country.create(params[:id])
+    render json: country
+  end
   end
 end
