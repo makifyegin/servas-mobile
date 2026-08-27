@@ -36,14 +36,6 @@ module Api
     end
 
     private
-    def authorize_admin!
-
-      unless Role.exists?(user_id: @current_user, role: ["admin", "owner"])
-        render json: { error: "Forbidden"}, status: :forbidden
-      end
-
-
-    end
 
     def country_params
       params.require(:country).permit(:name)

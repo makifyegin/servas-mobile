@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :countries, only: [ :index, :show, :create, :update, :destroy ]
+    resources :countries
+    resources :cities
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

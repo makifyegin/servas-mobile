@@ -29,5 +29,14 @@ module Api
 
         end
       end
+
+    def authorize_admin!
+
+      unless Role.exists?(user_id: @current_user, role: ["admin", "owner"])
+        render json: { error: "Forbidden"}, status: :forbidden
+      end
+
+
+    end
   end
 end
