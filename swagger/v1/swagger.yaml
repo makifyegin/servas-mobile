@@ -35,6 +35,10 @@ paths:
       responses:
         '201':
           description: countries created
+        '403':
+          description: forbidden not admin
+        '422':
+          description: Country already exist
       requestBody:
         content:
           application/json:

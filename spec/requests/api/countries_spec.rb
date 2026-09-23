@@ -47,6 +47,30 @@ RSpec.describe 'Countries API', type: :request do
         end
         run_test!
       end
+
+      response '403', 'forbidden not admin' do
+        let(:Authorization) { 'Bearer fake-token' }
+        let(:group) { Group.create!(name: "Servas Britain & Ireland") }
+        let(:country) { { country: { name: "Ireland", group_id: group.id } } }
+        before do
+          stub_authenticated_user(sub: "member-1")
+          Role.create!(user_id: "member-1", role: "member")
+        end
+        run_test!
+      end
+
+      response '422', 'Country already exist' do
+        let(:Authorization) { 'Bearer fake-token' }
+        let(:group) { Group.create!(name: "Servas Britain & Ireland") }
+        let(:country) { { country: { name: "Ireland", group_id: group.id } } }
+        before do
+          stub_authenticated_user(sub: "admin-1")
+          Role.create!(user_id: "admin-1", role: "admin")
+          Country.create!(name: "Ireland", group_id: group.id )
+
+        end
+        run_test!
+      end
     end
   end
 end
