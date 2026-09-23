@@ -40,6 +40,19 @@ paths:
           application/json:
             schema:
               type: object
+              properties:
+                country:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Scotland
+                    group_id:
+                      type: integer
+                      example: 1
+                  required:
+                  - name
+                  - group_id
 components:
   securitySchemes:
     bearer_auth:

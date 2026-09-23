@@ -20,7 +20,21 @@ RSpec.describe 'Countries API', type: :request do
       produces 'application/json'
       consumes 'application/json'
       parameter name: :Authorization, in: :header, schema: { type: :string }, required: true
-      parameter name: :country, in: :body, schema: { type: :object }
+      parameter name: :country, in: :body, schema: {
+        type: :object,
+        properties: {
+          country: {
+            type: :object,
+            properties: {
+              name: { type: :string, example: "Scotland" },
+              group_id: { type: :integer, example: 1 }
+            },
+            required: %w[name group_id]
+
+            }
+          }
+
+      }
       security [{ bearer_auth: [] }]
       response '201', 'countries created' do
         let(:Authorization) { 'Bearer fake-token' }
