@@ -38,7 +38,7 @@ module Api
     private
 
     def country_params
-      params.require(:country).permit(:name)
+      params.require(:country).permit(:name, :group_id)
     end
 
   end

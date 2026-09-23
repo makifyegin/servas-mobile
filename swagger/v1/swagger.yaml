@@ -1,0 +1,49 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/countries":
+    get:
+      summary: List countries
+      tags:
+      - Countries
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        required: true
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: countries found
+    post:
+      summary: Create a country
+      tags:
+      - Countries
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        required: true
+      security:
+      - bearer_auth: []
+      responses:
+        '201':
+          description: countries created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+servers:
+- url: http://localhost:3001
