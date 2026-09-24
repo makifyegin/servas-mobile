@@ -38,7 +38,7 @@ RSpec.describe 'Countries API', type: :request do
       security [{ bearer_auth: [] }]
       response '201', 'countries created' do
         let(:Authorization) { 'Bearer fake-token' }
-        let(:group) { Group.create!(name: "Servas Britain & Ireland") }
+        let(:group) { create(:group) }
         let(:country) { { country: { name: "Ireland", group_id: group.id } } }
         before do
           stub_authenticated_user(sub: "owner-1")
@@ -50,7 +50,7 @@ RSpec.describe 'Countries API', type: :request do
 
       response '403', 'forbidden not admin' do
         let(:Authorization) { 'Bearer fake-token' }
-        let(:group) { Group.create!(name: "Servas Britain & Ireland") }
+        let(:group) { create(:group) }
         let(:country) { { country: { name: "Ireland", group_id: group.id } } }
         before do
           stub_authenticated_user(sub: "member-1")
@@ -61,7 +61,7 @@ RSpec.describe 'Countries API', type: :request do
 
       response '422', 'Country already exist' do
         let(:Authorization) { 'Bearer fake-token' }
-        let(:group) { Group.create!(name: "Servas Britain & Ireland") }
+        let(:group) { create(:group) }
         let(:country) { { country: { name: "Ireland", group_id: group.id } } }
         before do
           stub_authenticated_user(sub: "admin-1")
@@ -71,6 +71,9 @@ RSpec.describe 'Countries API', type: :request do
         end
         run_test!
       end
+
+
+
     end
   end
 end

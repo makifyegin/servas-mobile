@@ -52,3 +52,5 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 gem "rswag", "~> 2.17"
+
+gem "factory_bot_rails", "~> 6.5", groups: [:development, :test]
