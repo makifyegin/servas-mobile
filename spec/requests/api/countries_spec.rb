@@ -62,7 +62,7 @@ RSpec.describe 'Countries API', type: :request do
       response '422', 'Country already exist' do
         let(:Authorization) { 'Bearer fake-token' }
         let(:group) { create(:group) }
-        let(:country) { { country: { name: "Ireland", group_id: group.id } } }
+        let(:country) { create(:country) }
         before do
           stub_authenticated_user(sub: "admin-1")
           Role.create!(user_id: "admin-1", role: "admin")
