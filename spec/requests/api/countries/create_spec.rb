@@ -20,7 +20,7 @@ RSpec.describe 'Countries API', type: :request do
           }
         }
       }
-      security [{ bearer_auth: [] }]
+      security [ { bearer_auth: [] } ]
 
       # Shared by every response below
       let(:Authorization) { 'Bearer fake-token' }

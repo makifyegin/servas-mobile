@@ -6,7 +6,7 @@ RSpec.describe 'Countries API', type: :request do
       tags 'Countries'
       produces 'application/json'
       parameter name: :Authorization, in: :header, schema: { type: :string }, required: true
-      security [{ bearer_auth: [] }]
+      security [ { bearer_auth: [] } ]
       response '200', 'countries found' do
         let(:Authorization) { 'Bearer fake-token' }
 

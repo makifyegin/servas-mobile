@@ -2,7 +2,7 @@
 
 module Api
 class CitiesController < Api::ApiController
-  before_action :authorize_admin!, only: [:create, :update, :destroy]
+  before_action :authorize_admin!, only: [ :create, :update, :destroy ]
 
   def index
     @cities = City.all

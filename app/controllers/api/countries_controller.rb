@@ -1,6 +1,6 @@
 module Api
   class CountriesController < Api::ApiController
-    before_action :authorize_admin!, only: [:create, :update, :destroy]
+    before_action :authorize_admin!, only: [ :create, :update, :destroy ]
   def index
     @countries = Country.all
     render json: @countries
@@ -40,6 +40,5 @@ module Api
     def country_params
       params.require(:country).permit(:name, :group_id)
     end
-
   end
 end
