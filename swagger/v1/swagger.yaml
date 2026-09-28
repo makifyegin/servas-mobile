@@ -5,21 +5,6 @@ info:
   version: v1
 paths:
   "/api/countries":
-    get:
-      summary: List countries
-      tags:
-      - Countries
-      parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        required: true
-      security:
-      - bearer_auth: []
-      responses:
-        '200':
-          description: countries found
     post:
       summary: Create a country
       tags:
@@ -34,11 +19,11 @@ paths:
       - bearer_auth: []
       responses:
         '201':
-          description: countries created
+          description: country created
         '403':
-          description: forbidden not admin
+          description: forbidden, not admin
         '422':
-          description: Country already exist
+          description: country already exists
       requestBody:
         content:
           application/json:
@@ -57,6 +42,21 @@ paths:
                   required:
                   - name
                   - group_id
+    get:
+      summary: List countries
+      tags:
+      - Countries
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        required: true
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: countries found
 components:
   securitySchemes:
     bearer_auth:
