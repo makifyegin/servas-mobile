@@ -30,7 +30,7 @@ RSpec.describe 'Countries API', type: :request do
       response '201', 'country created' do
         before do
           stub_authenticated_user(sub: "admin-1")
-          Role.create!(user_id: "admin-1", role: "admin")
+          create(:role, :admin, user_id: "admin-1")
         end
         run_test!
       end
@@ -38,7 +38,7 @@ RSpec.describe 'Countries API', type: :request do
       response '403', 'forbidden, not admin' do
         before do
           stub_authenticated_user(sub: "member-1")
-          Role.create!(user_id: "member-1", role: "member")
+          create(:role)
         end
         run_test!
       end
@@ -46,7 +46,7 @@ RSpec.describe 'Countries API', type: :request do
       response '422', 'country already exists' do
         before do
           stub_authenticated_user(sub: "admin-1")
-          Role.create!(user_id: "admin-1", role: "admin")
+          create(:role, user_id: "admin-1", role: "admin")
           create(:country, name: "Ireland", group: group)
         end
         run_test!
