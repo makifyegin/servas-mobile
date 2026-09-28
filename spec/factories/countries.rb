@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :country do
-    name { "Scotland" }
+    name { Faker::Address.unique.country }
     group
   end
 end

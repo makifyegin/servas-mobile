@@ -54,3 +54,5 @@ end
 gem "rswag", "~> 2.17"
 
 gem "factory_bot_rails", "~> 6.5", groups: [:development, :test]
+
+gem "faker", "~> 3.8", groups: [:development, :test]
