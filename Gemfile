@@ -56,3 +56,7 @@ gem "rswag", "~> 2.17"
 gem "factory_bot_rails", "~> 6.5", groups: [ :development, :test ]
 
 gem "faker", "~> 3.8", groups: [ :development, :test ]
+
+gem "simplecov", "~> 1.3", group: :test
+
+gem "rspec-openapi", "~> 0.34.0", group: :test

@@ -1,0 +1,217 @@
+---
+openapi: 3.1.0
+info:
+  title: Servas API
+  version: 1.0.0
+servers:
+- url: http://localhost:3001
+paths:
+  "/api/countries":
+    get:
+      summary: index
+      tags:
+      - Api::Country
+      responses:
+        '200':
+          description: returns a 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example: []
+    post:
+      summary: create
+      tags:
+      - Api::Country
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                country:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    group_id:
+                      type: integer
+                  required:
+                  - name
+                  - group_id
+              required:
+              - country
+            example:
+              country:
+                name: Ireland
+                group_id: 10
+      responses:
+        '201':
+          description: returns a 201 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  created_at:
+                    type: string
+                  group_id:
+                    type: integer
+                  name:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                - id
+                - created_at
+                - group_id
+                - name
+                - updated_at
+              example:
+                id: 6
+                created_at: '2026-10-04T23:51:01.266Z'
+                group_id: 10
+                name: Ireland
+                updated_at: '2026-10-04T23:51:01.266Z'
+        '403':
+          description: returns a 403 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Forbidden
+        '422':
+          description: returns a 422 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Unable to create country
+  "/api/countries/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Api::Country
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 0
+      responses:
+        '204':
+          description: returns a 204 response
+        '403':
+          description: returns a 403 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Forbidden
+        '404':
+          description: returns a 404 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Couldn't find Country with 'id'="0"
+    get:
+      summary: show
+      tags:
+      - Api::Country
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 6
+      responses:
+        '200':
+          description: responds 200 OK when the country exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  created_at:
+                    type: string
+                  group_id:
+                    type: integer
+                  name:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                - id
+                - created_at
+                - group_id
+                - name
+                - updated_at
+              example:
+                id: 6
+                created_at: '2026-10-04T23:51:01.384Z'
+                group_id: 10
+                name: Ireland
+                updated_at: '2026-10-04T23:51:01.384Z'
+        '401':
+          description: Responds 401 Unauthorized when no token is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Unauthorized
+        '404':
+          description: responds 404 Not Found when the country does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Couldn't find Country with 'id'="99"
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
