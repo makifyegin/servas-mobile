@@ -21,7 +21,5 @@ RSpec.describe "Showing a country", type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.parsed_body["name"]).to eq(country.name)
     end
-
   end
-
 end

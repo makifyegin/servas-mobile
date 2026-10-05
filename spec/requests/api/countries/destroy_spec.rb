@@ -39,7 +39,6 @@ RSpec.describe "Deleting a country", type: :request do
         before do
           stub_authenticated_user(sub: "admin-1")
           create(:role, :admin, user_id: "admin-1")   # default role is member
-
         end
         run_test!
       end
