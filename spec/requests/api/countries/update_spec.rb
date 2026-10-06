@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "PATCH /api/countries/:id", type: :request do
   context "when the user is an admin" do
     let(:created_country) { create(:country) }
+    let(:other_country) { create(:country) }
     let(:headers) { { "Authorization" => "Bearer fake-token" } }
     let(:params) do
       { country: { name: 'New Country Name' } }
@@ -26,6 +27,16 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
     it "responds 422 Unprocessable Content when the name is blank" do
       put("/api/countries/#{created_country.id}", headers:, params: { country: { name: "" } })
       expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it "responds 422 Unprocessable Content when the name already taken" do
+      put("/api/countries/#{created_country.id}", headers:, params: { country: { name: other_country.name } })
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it "responds 400 Bad Request when the country params are missing" do
+      put("/api/countries/#{created_country.id}", headers:)
+      expect(response).to have_http_status(:bad_request)
     end
   end
 end
