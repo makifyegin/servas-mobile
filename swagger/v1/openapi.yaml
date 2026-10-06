@@ -39,10 +39,10 @@ paths:
                   - updated_at
               example:
               - id: 6
-                created_at: '2026-10-06T00:45:30.451Z'
+                created_at: '2026-10-06T00:47:28.172Z'
                 group_id: 10
-                name: New Caledonia
-                updated_at: '2026-10-06T00:45:30.451Z'
+                name: Luxembourg
+                updated_at: '2026-10-06T00:47:28.172Z'
         '401':
           description: responds 401 Unauthorized when no token is given
           content:
@@ -108,10 +108,10 @@ paths:
                 - updated_at
               example:
                 id: 6
-                created_at: '2026-10-06T00:45:30.240Z'
+                created_at: '2026-10-06T00:47:28.010Z'
                 group_id: 10
                 name: Ireland
-                updated_at: '2026-10-06T00:45:30.240Z'
+                updated_at: '2026-10-06T00:47:28.010Z'
         '403':
           description: returns a 403 response
           content:
@@ -216,10 +216,10 @@ paths:
                 - updated_at
               example:
                 id: 6
-                created_at: '2026-10-06T00:45:30.473Z'
+                created_at: '2026-10-06T00:47:28.182Z'
                 group_id: 10
                 name: Ireland
-                updated_at: '2026-10-06T00:45:30.473Z'
+                updated_at: '2026-10-06T00:47:28.182Z'
         '401':
           description: Responds 401 Unauthorized when no token is given
           content:
@@ -302,9 +302,9 @@ paths:
               example:
                 name: New Country Name
                 id: 6
-                created_at: '2026-10-06T00:45:30.487Z'
+                created_at: '2026-10-06T00:47:28.187Z'
                 group_id: 10
-                updated_at: '2026-10-06T00:45:30.496Z'
+                updated_at: '2026-10-06T00:47:28.191Z'
         '400':
           description: responds 400 Bad Request when the country params are missing
           content:
@@ -2721,6 +2721,19 @@ paths:
                 is empty or invalid: country):\n  \napp/controllers/api/countries_controller.rb:41:in
                 &#39;Api::CountriesController#country_params&#39;\napp/controllers/api/countries_controller.rb:25:in
                 &#39;Api::CountriesController#update&#39;</textarea>\n\n</body>\n</html>\n"
+        '401':
+          description: responds 401 when the user no token given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Unauthorized
         '403':
           description: responds 403 when the user is a member
           content:
