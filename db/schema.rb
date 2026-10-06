@@ -10,45 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_23_091153) do
-  create_table "cities", force: :cascade do |t|
-    t.integer "country_id", null: false
-    t.datetime "created_at", null: false
-    t.string "name"
-    t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_cities_on_country_id"
-  end
-
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_194935) do
   create_table "countries", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.integer "group_id", null: false
     t.string "name"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "group_id", null: false
     t.index ["group_id"], name: "index_countries_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
-    t.datetime "created_at", null: false
     t.string "name"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "role"
-    t.datetime "updated_at", null: false
     t.string "user_id"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "name"
     t.integer "country_id", null: false
     t.datetime "created_at", null: false
-    t.string "name"
     t.datetime "updated_at", null: false
     t.index ["country_id"], name: "index_users_on_country_id"
   end
 
-  add_foreign_key "cities", "countries"
   add_foreign_key "countries", "groups"
   add_foreign_key "users", "countries"
 end
