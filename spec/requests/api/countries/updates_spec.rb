@@ -18,14 +18,14 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
       expect(response.parsed_body["name"]).to eq("New Country Name")
     end
 
-
     it "responds 404 Not Found when the country does not exist" do
       put("/api/countries/0", headers:, params:)
       expect(response).to have_http_status(:not_found)
     end
 
-
-
+    it "responds 422 Unprocessable Content when the name is blank" do
+      put("/api/countries/#{created_country.id}", headers:, params: { country: { name: "" } })
+      expect(response).to have_http_status(:unprocessable_content)
+    end
   end
-
 end
