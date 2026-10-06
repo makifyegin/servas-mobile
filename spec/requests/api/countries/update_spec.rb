@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "PATCH /api/countries/:id", type: :request do
+  let(:created_country) { create(:country) }
+  let(:params) do
+    { country: { name: 'New Country Name' } }
+  end
+  let(:other_country) { create(:country) }
+  let(:headers) { { "Authorization" => "Bearer fake-token" } }
+
   context "when the user is an admin" do
-    let(:created_country) { create(:country) }
-    let(:other_country) { create(:country) }
-    let(:headers) { { "Authorization" => "Bearer fake-token" } }
-    let(:params) do
-      { country: { name: 'New Country Name' } }
-    end
     before do
       stub_authenticated_user(sub: "admin_user")
       create(:role, user_id: "admin_user", role: "admin")
@@ -41,11 +42,6 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
   end
 
   context "when the user is a member" do
-    let(:created_country) { create(:country) }
-    let(:headers) { { "Authorization" => "Bearer fake-token" } }
-    let(:params) do
-      { country: { name: 'New Country Name' } }
-    end
     before do
       stub_authenticated_user(sub: "member_user")
       create(:role, user_id: "member_user", role: "member")
@@ -56,10 +52,6 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
     end
   end
   context "when the user is not a member" do
-    let(:created_country) { create(:country) }
-    let(:params) do
-      { country: { name: 'New Country Name' } }
-    end
     it 'responds 401 when the user no token given' do
       put("/api/countries/#{created_country.id}",  params:)
       expect(response).to have_http_status(:unauthorized)

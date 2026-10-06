@@ -39,10 +39,10 @@ paths:
                   - updated_at
               example:
               - id: 6
-                created_at: '2026-10-06T00:49:46.913Z'
+                created_at: '2026-10-06T00:55:46.062Z'
                 group_id: 10
-                name: Greenland
-                updated_at: '2026-10-06T00:49:46.913Z'
+                name: Congo
+                updated_at: '2026-10-06T00:55:46.062Z'
         '401':
           description: responds 401 Unauthorized when no token is given
           content:
@@ -108,10 +108,10 @@ paths:
                 - updated_at
               example:
                 id: 6
-                created_at: '2026-10-06T00:49:46.742Z'
+                created_at: '2026-10-06T00:55:45.795Z'
                 group_id: 10
                 name: Ireland
-                updated_at: '2026-10-06T00:49:46.742Z'
+                updated_at: '2026-10-06T00:55:45.795Z'
         '403':
           description: returns a 403 response
           content:
@@ -216,10 +216,10 @@ paths:
                 - updated_at
               example:
                 id: 6
-                created_at: '2026-10-06T00:49:46.923Z'
+                created_at: '2026-10-06T00:55:46.085Z'
                 group_id: 10
                 name: Ireland
-                updated_at: '2026-10-06T00:49:46.923Z'
+                updated_at: '2026-10-06T00:55:46.085Z'
         '401':
           description: Responds 401 Unauthorized when no token is given
           content:
@@ -302,9 +302,9 @@ paths:
               example:
                 name: New Country Name
                 id: 6
-                created_at: '2026-10-06T00:49:46.930Z'
+                created_at: '2026-10-06T00:55:46.098Z'
                 group_id: 10
-                updated_at: '2026-10-06T00:49:46.934Z'
+                updated_at: '2026-10-06T00:55:46.106Z'
         '400':
           description: responds 400 Bad Request when the country params are missing
           content:
@@ -1033,10 +1033,10 @@ paths:
                 \           result\n</div><div class=\"line\">          end\n</div>\n</pre>\n</td>\n
                 \         </tr>\n        </table>\n      </div>\n    </div>\n    <div
                 class=\"source hidden\" id=\"frame-source-0-53\">\n      <div class=\"info\">\n
-                \       Extracted source (around line <strong>#38</strong>):\n      </div>\n
+                \       Extracted source (around line <strong>#39</strong>):\n      </div>\n
                 \     <div class=\"data\">\n        <table cellpadding=\"0\" cellspacing=\"0\"
                 class=\"lines\">\n          <tr>\n            <td>\n              <pre
-                class=\"line_numbers\">\n<span>36</span>\n<span>37</span>\n<span>38</span>\n<span>39</span>\n<span>40</span>\n<span>41</span>\n
+                class=\"line_numbers\">\n<span>37</span>\n<span>38</span>\n<span>39</span>\n<span>40</span>\n<span>41</span>\n<span>42</span>\n
                 \             </pre>\n            </td>\n<td width=\"100%\">\n<pre>\n<div
                 class=\"line\">\n</div><div class=\"line\">    it &quot;responds 400
                 Bad Request when the country params are missing&quot; do\n</div><div
@@ -1971,7 +1971,7 @@ paths:
                 \           <br>\n          </div>\n          <div class=\"trace\">\n
                 \           \n            <a class=\"trace-frames trace-frames-0\"
                 data-exception-object-id=\"12792\" data-frame-id=\"53\" href=\"#\">\n
-                \             /home/junior/Documents/Projects/raspberry-pi/servas/spec/requests/api/countries/update_spec.rb:38:in
+                \             /home/junior/Documents/Projects/raspberry-pi/servas/spec/requests/api/countries/update_spec.rb:39:in
                 &#39;block (3 levels) in &lt;top (required)&gt;&#39;\n            </a>\n
                 \           <br>\n          </div>\n          <div class=\"trace\">\n
                 \           \n            <a class=\"trace-frames trace-frames-0\"
@@ -2455,7 +2455,7 @@ paths:
                 \           <br>\n          </div>\n          <div class=\"trace\">\n
                 \           \n            <a class=\"trace-frames trace-frames-0\"
                 data-exception-object-id=\"12792\" data-frame-id=\"53\" href=\"#\">\n
-                \             /home/junior/Documents/Projects/raspberry-pi/servas/spec/requests/api/countries/update_spec.rb:38:in
+                \             /home/junior/Documents/Projects/raspberry-pi/servas/spec/requests/api/countries/update_spec.rb:39:in
                 &#39;block (3 levels) in &lt;top (required)&gt;&#39;\n            </a>\n
                 \           <br>\n          </div>\n          <div class=\"trace\">\n
                 \           \n            <a class=\"trace-frames trace-frames-0\"
