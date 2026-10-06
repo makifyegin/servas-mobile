@@ -9,8 +9,8 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
       { country: { name: 'New Country Name' } }
     end
     before do
-      stub_authenticated_user
-      create(:role, user_id: "test-user", role: "admin")
+      stub_authenticated_user(sub: "admin_user")
+      create(:role, user_id: "admin_user", role: "admin")
     end
 
     it "responds 200 OK with the updated country" do
@@ -37,6 +37,22 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
     it "responds 400 Bad Request when the country params are missing" do
       put("/api/countries/#{created_country.id}", headers:)
       expect(response).to have_http_status(:bad_request)
+    end
+  end
+
+  context "when the user is a member" do
+    let(:created_country) { create(:country) }
+    let(:headers) { { "Authorization" => "Bearer fake-token" } }
+    let(:params) do
+      { country: { name: 'New Country Name' } }
+    end
+    before do
+      stub_authenticated_user(sub: "member_user")
+      create(:role, user_id: "member_user", role: "member")
+    end
+    it 'responds 403 when the user is a member' do
+      put("/api/countries/#{created_country.id}", headers:, params:)
+      expect(response).to have_http_status(:forbidden)
     end
   end
 end
