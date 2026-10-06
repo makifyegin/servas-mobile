@@ -54,7 +54,12 @@ RSpec.describe "PATCH /api/countries/:id", type: :request do
       put("/api/countries/#{created_country.id}", headers:, params:)
       expect(response).to have_http_status(:forbidden)
     end
-
+  end
+  context "when the user is not a member" do
+    let(:created_country) { create(:country) }
+    let(:params) do
+      { country: { name: 'New Country Name' } }
+    end
     it 'responds 401 when the user no token given' do
       put("/api/countries/#{created_country.id}",  params:)
       expect(response).to have_http_status(:unauthorized)
