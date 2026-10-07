@@ -1,56 +1,51 @@
-require 'swagger_helper'
+require "rails_helper"
 
-RSpec.describe 'Countries API', type: :request do
-  path '/api/countries' do
-    post 'Create a country' do
-      tags 'Countries'
-      produces 'application/json'
-      consumes 'application/json'
-      parameter name: :Authorization, in: :header, schema: { type: :string }, required: true
-      parameter name: :country, in: :body, schema: {
-        type: :object,
-        properties: {
-          country: {
-            type: :object,
-            properties: {
-              name: { type: :string, example: "Scotland" },
-              group_id: { type: :integer, example: 1 }
-            },
-            required: %w[name group_id]
-          }
-        }
-      }
-      security [ { bearer_auth: [] } ]
+RSpec.describe "POST /api/countries", type: :request do
+  let(:params) { { country: { name: "Ireland" } } }
+  let(:headers) { { "Authorization" => "Bearer fake-token" } }
 
-      # Shared by every response below
-      let(:Authorization) { 'Bearer fake-token' }
-      let(:group) { create(:group) }
-      let(:country) { { country: { name: "Ireland", group_id: group.id } } }
+  it "responds 401 Unauthorized when no token is given" do
+    post "/api/countries", params: params
+    expect(response).to have_http_status(:unauthorized)
+  end
 
-      response '201', 'country created' do
-        before do
-          stub_authenticated_user(sub: "admin-1")
-          create(:role, :admin, user_id: "admin-1")
-        end
-        run_test!
-      end
+  context "when the user is a member" do
+    before do
+      stub_authenticated_user(sub: "member1")
+      create(:role, user_id: "member1", role: "member")
+    end
+    it "responds 403 Forbidden" do
+      post "/api/countries", params: params, headers: headers
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
 
-      response '403', 'forbidden, not admin' do
-        before do
-          stub_authenticated_user(sub: "member-1")
-          create(:role)
-        end
-        run_test!
-      end
+  context "when the user is an admin" do
+    let(:group) { create(:group) }
+    let(:params) { { country: { name: "Ireland", group_id: group.id } } }
+    before do
+      stub_authenticated_user(sub: "admin1")
+      create(:role, user_id: "admin1", role: "admin")
+      create(:country, name: "United Kingdom", group_id: group.id)
+    end
+    it "responds 201 Created with the new country" do
+      post "/api/countries", params: params, headers: headers
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body["name"]).to eq(params[:country][:name])
+    end
 
-      response '422', 'country already exists' do
-        before do
-          stub_authenticated_user(sub: "admin-1")
-          create(:role, user_id: "admin-1", role: "admin")
-          create(:country, name: "Ireland", group: group)
-        end
-        run_test!
-      end
+    it "responds 422 Unprocessable Content when the name is blank" do
+      post "/api/countries", params: { country: { name: "", group_id: group.id } }, headers: headers
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it "responds 422 Unprocessable Content when the name is already taken" do
+      post "/api/countries", params: { country: { name: "United Kingdom", group_id: group.id } }, headers: headers
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+    it "responds 400 Bad Request when the country params are missing" do
+      post "/api/countries", params: {}, headers: headers
+      expect(response).to have_http_status(:bad_request)
     end
   end
 end
