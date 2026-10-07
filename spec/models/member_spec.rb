@@ -23,5 +23,4 @@ RSpec.describe Member, type: :model do
     new_member = build(:member, hydra_sub: existing_member.hydra_sub)
     expect(new_member).not_to be_valid
   end
-
 end
