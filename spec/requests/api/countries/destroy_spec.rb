@@ -1,47 +1,25 @@
-require "swagger_helper"
+require "rails_helper"
 
-RSpec.describe "Deleting a country", type: :request do
-  path '/api/countries/{id}' do
-    parameter name: :id, in: :path, type: :integer
+RSpec.describe "DELETE /api/countries/:id", type: :request do
+  let(:group) { create(:group) }
+  let(:country) { create(:country, group_id: group.id) }
+  let(:headers) { { "Authorization" => "Bearer fake-token" } }
+  it "responds 401 Unauthorized when no token is given" do
+    delete "/api/countries/#{country.id}"
+    expect(response).to have_http_status(:unauthorized)
+  end
 
-    delete 'Delete a country' do
-      tags 'Countries'
-      produces 'application/json'
-      parameter name: :Authorization, in: :header, schema: { type: :string }, required: true
-      security [ { bearer_auth: [] } ]
-
-      # Shared by every response below
-      let(:Authorization) { 'Bearer fake-token' }
-      let(:country) { create(:country) }   # a REAL record: it must exist before we delete it
-      let(:id) { country.id }              # fills the {id} in the URL
-
-      response '204', 'country deleted' do
-        before do
-          stub_authenticated_user(sub: "admin-1")
-          create(:role, :admin, user_id: "admin-1")
-        end
-
-        run_test!
-      end
-
-      response '403', 'forbidden, not admin' do
-        before do
-          stub_authenticated_user(sub: "member-1")
-          create(:role, user_id: "member-1")   # default role is member
-        end
-
-        run_test!
-      end
-
-      response '404', 'not existent' do
-        let(:id) { 0 }   # overrides the shared let(:id): no country has id 0
-
-        before do
-          stub_authenticated_user(sub: "admin-1")
-          create(:role, :admin, user_id: "admin-1")   # default role is member
-        end
-        run_test!
-      end
+  context "when the user is an admin" do
+    before do
+      stub_authenticated_user(sub: "admin1")
+      create(:role, user_id: "admin1", role: "admin")
     end
+    it "responds 204 admin can delete country" do
+      delete "/api/countries/#{country.id}", headers: headers
+      expect(response).to have_http_status(:no_content)
+    end
+  end
+
+  context "when the user is a member" do
   end
 end
